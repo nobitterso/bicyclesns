@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+    Route::get('bicycle/create', 'Admin\BicycleController@add');
+    Route::post('news/create', 'Admin\BicycleController@create');
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
