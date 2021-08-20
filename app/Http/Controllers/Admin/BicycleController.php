@@ -17,15 +17,15 @@ class BicycleController extends Controller
   {
        $this->validate($request, bicycle::$rules);
 
-      $news = new bicycle;
+      $bicycle = new bicycle;
       $form = $request->all();
 
      
       if (isset($form['image'])) {
         $path = $request->file('image')->store('public/image');
-        $news->image_path = basename($path);
+        $bicycle->image_path = basename($path);
       } else {
-          $news->image_path = null;
+          $bicycle->image_path = null;
       }
 
      
@@ -34,10 +34,48 @@ class BicycleController extends Controller
       unset($form['image']);
 
      
-      $news->fill($form);
-      $news->save();
+      $bicycle->fill($form);
+      $bicycle->save();
       return redirect('admin/bicycle/create');
   }  
+  public function index(Request $request)
+  {
+      $cond_title = $request->cond_title;
+      if ($cond_title != '') {
+          $posts = Bicycle::where('title', $cond_title)->get();
+      } else {
+          $posts = Bicycle::all();
+      }
+      return view('admin.bicycle.index', ['posts' => $posts, 'cond_title' => $cond_title]);
+  }
+
+
+  public function edit(Request $request)
+  {
+      $news = Bicycle::find($request->id);
+      if (empty($news)) {
+        abort(404);    
+      }
+      return view('admin.news.edit', ['news_form' => $bicycle]);
+  }
+
+
+  public function update(Request $request)
+  {
+      // Validationをかける
+      $this->validate($request, Bicycle::$rules);
+      // News Modelからデータを取得する
+      $bicycle = bicycle::find($request->id);
+      // 送信されてきたフォームデータを格納する
+      $bicycle_form = $request->all();
+      unset($bicycle_form['_token']);
+
+      // 該当するデータを上書きして保存する
+      $bicycle->fill($bicycle_form)->save();
+
+      return redirect('admin/bicycle');
+  }
+
 
 
 }

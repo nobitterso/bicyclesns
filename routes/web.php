@@ -16,7 +16,8 @@ Route::get('/', function () {
 });
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('bicycle/create', 'Admin\BicycleController@add');
-    Route::post('news/create', 'Admin\BicycleController@create');
+    Route::post('bicycle/create', 'Admin\BicycleController@create');
+    Route::get('bicycle', 'Admin\BicycleController@index')->middleware('auth');
 });
 Auth::routes();
 
