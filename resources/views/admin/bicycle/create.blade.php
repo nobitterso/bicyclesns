@@ -1,29 +1,14 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>post</title>
-    </head>
-    <body>
-        <h1>POST</h1>
-    </body>
-</html>{{-- layouts/admin.blade.phpを読み込む --}}
 @extends('layouts.admin')
 
-
-{{-- admin.blade.phpの@yield('title')に'ニュースの新規作成'を埋め込む --}}
 @section('title', 'POST')
 
-{{-- admin.blade.phpの@yield('content')に以下のタグを埋め込む --}}
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <h2>POST</h2>
-                form action="{{ action('Admin\NewsController@create') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ action('Admin\BicycleController@create') }}" method="post" enctype="multipart/form-data">
 
                     @if (count($errors) > 0)
                         <ul>
@@ -32,23 +17,32 @@
                             @endforeach
                         </ul>
                     @endif
+                     <div class="form-group row">
+                        <label class="col-md-2" for="body">コメント</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control" name="body" rows="10">{{ old('body') }}</textarea>
+                        </div>
+                    </div>    
+                    <div class="form-group row">
+                        <label class="col-md-2" for="body">位置情報</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="rocation" value="{{ old('title') }}">
+                        </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2" for="title">画像</label>
+                        <label class="col-md-2">タグ</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="tag" value="{{ old('title') }}">
+                        </div>
+                    </div>
+                    {{ csrf_field() }}
+                    <div class="form-group row">
+                        <label class="col-md-2">画像</label>
                         <div class="col-md-10">
                             <input type="file" class="form-control-file" name="image">
                         </div>
                     </div>
-                    {{ csrf_field() }}
                     <input type="submit" class="btn btn-primary" value="更新">
-                    <div class="form-group row">
-                        <label class="col-md-2" for="body">コメント</label>
-                        <div class="col-md-10">
-                            <textarea class="form-control" name="body" rows="20">{{ old('body') }}</textarea>
-                             <div class="form-group row">
-                        <label class="col-md-2" for="body">位置情報</label>
-                        <div class="col-md-10">
-                            <textarea class="form-control" name="body" rows="20">{{ old('body') }}</textarea>
                 </form>
             </div>
         </div>

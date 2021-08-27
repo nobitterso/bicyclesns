@@ -62,15 +62,14 @@ class BicycleController extends Controller
 
   public function update(Request $request)
   {
-      // Validationをかける
-      $this->validate($request, Bicycle::$rules);
-      // News Modelからデータを取得する
+  
+      $this->validate($request, bicycle::$rules);
+    
       $bicycle = bicycle::find($request->id);
-      // 送信されてきたフォームデータを格納する
+
       $bicycle_form = $request->all();
       unset($bicycle_form['_token']);
 
-      // 該当するデータを上書きして保存する
       $bicycle->fill($bicycle_form)->save();
 
       return redirect('admin/bicycle');

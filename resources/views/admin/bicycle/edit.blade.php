@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto">
-                <h2>ニュース編集</h2>
+                <h2>投稿編集</h2>
                 <form action="{{ action('Admin\NewsController@update') }}" method="post" enctype="multipart/form-data">
                     @if (count($errors) > 0)
                         <ul>
@@ -15,15 +15,21 @@
                         </ul>
                     @endif
                     <div class="form-group row">
-                        <label class="col-md-2" for="title">タイトル</label>
+                        <label class="col-md-2" for="title">コメント</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="title" value="{{ $news_form->title }}">
+                            <textarea class="form-control" name="body" rows="20">{{ $news_form->body }}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2" for="body">本文</label>
+                        <label class="col-md-2" for="body">位置情報</label>
                         <div class="col-md-10">
-                            <textarea class="form-control" name="body" rows="20">{{ $news_form->body }}</textarea>
+                            <input type="text" class="form-control" name="location" value="{{ $news_form->title }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2" for="body">タグ</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="tag" value="{{ $news_form->title }}">
                         </div>
                     </div>
                     <div class="form-group row">
